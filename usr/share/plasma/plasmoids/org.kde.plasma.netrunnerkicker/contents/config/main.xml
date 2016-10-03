@@ -13,7 +13,7 @@
       <default>true</default>
     </entry>
     <entry name="customButtonImage" type="Url">
-      <default>file:///usr/share/pixmaps/swirl-run-4.png</default>
+      <default>file:///usr/share/pixmaps/homerun.svg</default>
     </entry>
 
     <entry name="appNameFormat" type="Int">
