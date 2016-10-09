@@ -35,8 +35,11 @@ Item {
 
     property bool isDash: (plasmoid.pluginName == "org.kde.plasma.kickerdash")
 
+    Plasmoid.switchWidth: isDash || !Plasmoid.fullRepresentationItem ? 0 : Plasmoid.fullRepresentationItem.Layout.minimumWidth
+    Plasmoid.switchHeight: isDash || !Plasmoid.fullRepresentationItem ? 0 : Plasmoid.fullRepresentationItem.Layout.minimumHeight
+
     // this is a bit of a hack to prevent Plasma from spawning a dialog on its own when we're Dash
-    Plasmoid.preferredRepresentation: isDash ? Plasmoid.fullRepresentation : Plasmoid.compactRepresentation
+    Plasmoid.preferredRepresentation: isDash ? Plasmoid.fullRepresentation : null
 
     Plasmoid.compactRepresentation: isDash ? null : compactRepresentation
     Plasmoid.fullRepresentation: isDash ? compactRepresentation : menuRepresentation
@@ -131,17 +134,19 @@ Item {
     Kicker.RunnerModel {
         id: runnerModel
 
+        appletInterface: plasmoid
+
         favoritesModel: globalFavorites
 
         runners: {
             var runners = new Array("services");
 
             if (isDash) {
-                runners.push("desktopsessions");
+                runners = runners.concat(new Array("desktopsessions", "PowerDevil"));
             }
 
             if (plasmoid.configuration.useExtraRunners) {
-                runners.concat(plasmoid.configuration.extraRunners);
+                runners = runners.concat(plasmoid.configuration.extraRunners);
             }
 
             return runners;
